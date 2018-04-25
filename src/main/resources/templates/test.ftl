@@ -1,4 +1,4 @@
-<htm>
+<html>
     <body>
     include from top.ftl:
     <#include "top.ftl">
@@ -42,8 +42,20 @@
 
         usage of add function: ${add(10, 20)}
 
+        <#--学习控制流-->
+        <#if 1 == 2>
+            if_1
+        <#else>
+            if_2
+        </#if>
+
+        <#assign var1 = 1>
+        <#switch var1 >
+            <#case 1>   case_1 <#break>
+            <#case 2>   case_2 <#break>
+        </#switch>
 
 
     </pre>
     </body>
-</htm>
+</html>
