@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.quora.dao.QuestionDAO">
+    <sql id="table">question</sql>
+    <sql id="selectFields">id, title, content, user_id, created_date, comment_count</sql>
+    <select id="selectLatestQuestions" resultType="com.quora.module.Question">
+        select
+        <include refid="selectFields"/>
+        from
+        <include refid="table"/>
+        <if test="userId != 0">
+            where user_id = #{userId}
+        </if>
+        order by id DESC <!--按id反序相当于按datetime反序-->
+        LIMIT #{offset}, #{limit}
+    </select>
+</mapper>

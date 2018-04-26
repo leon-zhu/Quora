@@ -28,12 +28,13 @@
         </#list>
 
         <#--解析对象-->
-        ${stu.age}, ${stu.name}
-        ${stu.toString()}
+        <#--${stu.age}, ${stu.name}
+        ${stu.toString()}-->
 
         <#--自定义变量-->
+        <#--
         <#assign desc = "This is description, ${stu.name}">
-        ${desc!}
+        ${desc!} -->
 
         <#--自定义函数-->
         <#function add num1 num2>
