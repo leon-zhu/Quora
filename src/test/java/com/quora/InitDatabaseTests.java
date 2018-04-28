@@ -45,6 +45,9 @@ public class InitDatabaseTests {
             user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", rand.nextInt(1000)));
             userDAO.addUser(user);
 
+            user.setName("leon");
+            System.out.println("update: " + userDAO.updatePassword(user.getId(), "12345"));
+
             Question question = new Question();
             question.setTitle("title" + i);
             question.setCommentCount(i);

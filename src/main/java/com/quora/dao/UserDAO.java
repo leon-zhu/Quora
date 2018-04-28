@@ -25,8 +25,8 @@ public interface UserDAO {
     @Select({"select " + SELECT_FIELDS + " from " + TABLE_NAME + " where id = " + "#{id}"})
     User selectById(int id);
 
-    @Update({"update " + TABLE_NAME + "set password = #{password} where id = #{id}"})
-    int updatePassword(User user); //id位于user中, mybatis自己会寻找
+    //@Update({"update " + TABLE_NAME + "set password = #{password} where id = #{id}"})
+    int updatePassword(@Param("id") int id, @Param("password") String password); //id位于user中, mybatis自己会寻找
 
     @Delete({"delete from " + TABLE_NAME + " where id = #{id}"})
     int deleteById(int id);

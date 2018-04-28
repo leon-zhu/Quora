@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * description here
+ * 知乎首页展示
  *
  * @author: leon
  * @date: 2018/4/26 20:55
@@ -34,6 +34,12 @@ public class IndexController {
     private UserService userService;
 
 
+    /**
+     * 用户页面, 对应于userId
+     * @param model 模型
+     * @param userId 用户id
+     * @return index.ftl
+     */
     @RequestMapping(path = {"/user/{userId}"})
     public String index(Model model, @PathVariable("userId") int userId) {
         List<ViewObject> viewObjects = getQuestions(userId, 0, 10);
@@ -41,6 +47,11 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 首页, userId为0
+     * @param model 模型
+     * @return index.ftl
+     */
     @RequestMapping(path = {"/", "/index"})
     public String index(Model model) {
 
@@ -49,13 +60,20 @@ public class IndexController {
         return "index";
     }
 
+    /**
+     * 选取最新的问题列表,
+     * @param userId 用户id
+     * @param offset 偏移大小
+     * @param limit 问题数量
+     * @return 问题list
+     */
     private List<ViewObject> getQuestions(int userId, int offset, int limit) {
         List<Question> questions = questionService.getLateseQuestions(userId, offset, limit);
         List<ViewObject> viewObjects = new ArrayList<>();
         for (Question question : questions) {
             ViewObject vo = new ViewObject();
             vo.set("question", question);
-            vo.set("user", userService.getUser(question.getUserId()));
+            vo.set("user", userService.getUser(question.getUserId())); //发布该问题的用户
             viewObjects.add(vo);
         }
         return viewObjects;
