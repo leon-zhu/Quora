@@ -54,6 +54,7 @@ public class InitDatabaseTests {
             question.setContent("content" + i);
             question.setUserId(i);
             questionDAO.addUser(question);
+            //questionDAO.deleteById(question.getId());
         }
         List<Question> questions = questionDAO.selectLatestQuestions(0, 1, 5);
         for (Question question : questions) {
