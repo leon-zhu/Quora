@@ -3,11 +3,39 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.quora.dao.UserDAO">
+
     <sql id="table">user</sql>
+    <sql id="insertFields">name, password, salt, head_url</sql>
+    <sql id="selectFields">id, name, password, salt, head_url</sql>
+
     <update id="updatePassword">
         UPDATE
         <include refid="table"/>
         set password = #{password}
         where id = #{id}
     </update>
+
+    <insert id="addUser" parameterType="com.quora.module.User">
+        insert into
+        <include refid="table"/>
+        (
+        <include refid="insertFields"/>
+        )
+        VALUES (#{name}, #{password}, #{salt}, #{headUrl})
+    </insert>
+
+    <select id="selectById" resultType="com.quora.module.User">
+        select
+        <include refid="selectFields"/>
+        from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
+    <delete id="deleteById" parameterType="int">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
+
 </mapper>

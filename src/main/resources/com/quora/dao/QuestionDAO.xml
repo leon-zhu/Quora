@@ -3,8 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.quora.dao.QuestionDAO">
+
     <sql id="table">question</sql>
+    <sql id="insertFields">title, content, user_id, created_date, comment_count</sql>
     <sql id="selectFields">id, title, content, user_id, created_date, comment_count</sql>
+
     <select id="selectLatestQuestions" resultType="com.quora.module.Question">
         select
         <include refid="selectFields"/>
@@ -13,8 +16,23 @@
         <if test="userId != 0">
             where user_id = #{userId}
         </if>
-        order by id DESC <!--按id反序相当于按datetime反序-->
+        order by id desc <!--按id反序相当于按datetime反序-->
         LIMIT #{offset}, #{limit}
     </select>
+
+    <insert id="addUser" parameterType="com.quora.module.User">
+        insert into
+        <include refid="table"/>
+        (
+        <include refid="insertFields"/>
+        )
+        VALUES (#{title}, #{content}, #{userId}, #{createdDate}, #{commentCount})
+    </insert>
+
+    <delete id="deleteById" parameterType="int">
+        delete from
+        <include refid="table"/>
+        where id = #{id}
+    </delete>
 
 </mapper>
