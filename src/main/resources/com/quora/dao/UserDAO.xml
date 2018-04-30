@@ -38,4 +38,12 @@
         where id = #{id}
     </delete>
 
+    <select id="selectByName" resultType="com.quora.module.User">
+        select
+        <include refid="selectFields"/>
+        from
+        <include refid="table"/>
+        where name = #{name}
+    </select>
+
 </mapper>

@@ -1,9 +1,12 @@
 package com.quora;
 
+import com.quora.dao.LoginTicketDAO;
 import com.quora.dao.QuestionDAO;
 import com.quora.dao.UserDAO;
+import com.quora.module.LoginTicket;
 import com.quora.module.Question;
 import com.quora.module.User;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,10 @@ public class InitDatabaseTests {
 
     @Autowired
     private QuestionDAO questionDAO;
+
+    @Autowired
+    private LoginTicketDAO loginTicketDAO;
+
     @Test
     public void initDatabase() {
         Random rand = new Random();
@@ -44,9 +51,12 @@ public class InitDatabaseTests {
             user.setSalt(UUID.randomUUID().toString().substring(0, 10).replace("-", ""));
             user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", rand.nextInt(1000)));
             userDAO.addUser(user);
+            //Assert.assertEquals(userDAO.selectByName(user.getName()), user);
+            //System.out.println(userDAO.selectByName(user.getName()));
 
             user.setName("leon");
-            System.out.println("update: " + userDAO.updatePassword(user.getId(), "12345"));
+
+            //System.out.println("update: " + userDAO.updatePassword(user.getId(), "12345"));
 
             Question question = new Question();
             question.setTitle("title" + i);
@@ -58,11 +68,23 @@ public class InitDatabaseTests {
             question.setUserId(i);
             questionDAO.addUser(question);
             //questionDAO.deleteById(question.getId());
+
+            LoginTicket loginTicket = new LoginTicket();
+            loginTicket.setStatus(0);
+            loginTicket.setExpired(new Date());
+            loginTicket.setUserId(100);
+            loginTicket.setTicket(UUID.randomUUID().toString().replaceAll("-", ""));
+            loginTicketDAO.addLoginTicket(loginTicket);
+            loginTicketDAO.updateStatus(loginTicket.getTicket(), 1);
+            System.out.println(loginTicketDAO.selectByTicket(loginTicket.getTicket()));
+
+
         }
         List<Question> questions = questionDAO.selectLatestQuestions(0, 1, 5);
         for (Question question : questions) {
             System.out.println(question);
         }
+
     }
 
 }
