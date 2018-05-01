@@ -6,11 +6,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
@@ -39,6 +41,7 @@ public class LoginController {
     public String reg(Model model,
                       @RequestParam("name") String name,
                       @RequestParam("password") String password,
+                      @RequestParam(value = "next", required = false) String next,
                       HttpServletResponse response) {
 
 
@@ -50,7 +53,10 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", res.get("ticket"));
                 cookie.setPath("/"); //可在同一应用服务器内共享方法
                 response.addCookie(cookie);
-                return "redirect:/";
+                if (next != null)
+                    return "redirect:" + next;
+                else
+                    return "redirect:/";
             } else {
                 //不包含ticket, 说明注册发生异常
                 model.addAttribute("msg", res.get("msg"));
@@ -66,7 +72,8 @@ public class LoginController {
     //注册页面: 访问/reglogin, 然后显示login.ftl页面
     //在login.ftl中: 登陆->/login/, 注册->/reg/
     @RequestMapping(path = "/reglogin", method = RequestMethod.GET)
-    public String reg(Model model) {
+    public String reg(Model model, @RequestParam(value = "next", required = false) String next) {
+        model.addAttribute("next", next);
         return "login";
     }
 
@@ -79,9 +86,10 @@ public class LoginController {
      */
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(Model model,
-                      @RequestParam("name") String name,
-                      @RequestParam("password") String password,
+                        @RequestParam("name") String name,
+                        @RequestParam("password") String password,
                         @RequestParam("rememberme") boolean remember,
+                        @RequestParam(value = "next", required = false) String next,
                         HttpServletResponse response) {
 
         try {
@@ -92,7 +100,10 @@ public class LoginController {
                 Cookie cookie = new Cookie("ticket", res.get("ticket"));
                 cookie.setPath("/"); //可在同一应用服务其内共享方法
                 response.addCookie(cookie);
-                return "redirect:/";
+                if (next == null)
+                    return "redirect:/";
+                else
+                    return "redirect:" + next;
             } else {
                 //注册发生异常
                 model.addAttribute("msg", res.get("msg"));
@@ -103,6 +114,14 @@ public class LoginController {
             return "login";
         }
 
+    }
+
+    @RequestMapping(path = "/logout", method = RequestMethod.GET)
+    public String logout(@CookieValue("ticket") String ticket) {
+        if (ticket != null) {
+            userService.logout(ticket);
+        }
+        return "redirect:/";
     }
 
 }

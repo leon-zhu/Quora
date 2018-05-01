@@ -2,6 +2,7 @@ package com.quora.dao;
 
 import com.quora.module.User;
 import org.apache.ibatis.annotations.*;
+import org.mybatis.spring.annotation.MapperScan;
 
 /**
  * description here
