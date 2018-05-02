@@ -30,6 +30,7 @@ public class IndexController {
 
     @Autowired
     private QuestionService questionService;
+
     @Autowired
     private UserService userService;
 
@@ -73,6 +74,7 @@ public class IndexController {
         for (Question question : questions) {
             ViewObject vo = new ViewObject();
             vo.set("question", question);
+            //这行可能会导致freemarker出现空指针(提问时userId乱填导致的)
             vo.set("user", userService.getUser(question.getUserId())); //发布该问题的用户
             viewObjects.add(vo);
         }

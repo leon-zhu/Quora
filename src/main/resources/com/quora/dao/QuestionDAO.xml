@@ -20,7 +20,7 @@
         LIMIT #{offset}, #{limit}
     </select>
 
-    <insert id="addUser" parameterType="com.quora.module.User">
+    <insert id="addQuestion" parameterType="com.quora.module.Question">
         insert into
         <include refid="table"/>
         (
@@ -34,5 +34,6 @@
         <include refid="table"/>
         where id = #{id}
     </delete>
+
 
 </mapper>

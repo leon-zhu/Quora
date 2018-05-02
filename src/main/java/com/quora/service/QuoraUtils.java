@@ -1,5 +1,6 @@
 package com.quora.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.quora.controller.DemoController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,21 @@ import java.security.MessageDigest;
 public class QuoraUtils {
     private static final Logger logger = LoggerFactory.getLogger(QuoraUtils.class);
 
+    public static final int ANONYMOUS_USER_ID = 999;
+
+
+    public static String getJSONString(int code, String msg) {
+        JSONObject json = new JSONObject();
+        json.put("code", code);
+        json.put("msg", msg);
+        return json.toJSONString();
+    }
+
+    public static String getJSONString(int code) {
+        JSONObject json = new JSONObject();
+        json.put("code", code);
+        return json.toJSONString();
+    }
 
     /**
      * 对字符串进行md5加密

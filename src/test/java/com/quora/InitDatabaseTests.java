@@ -66,7 +66,7 @@ public class InitDatabaseTests {
             question.setCreatedDate(date);
             question.setContent("content" + i);
             question.setUserId(i);
-            questionDAO.addUser(question);
+            questionDAO.addQuestion(question);
             //questionDAO.deleteById(question.getId());
 
             LoginTicket loginTicket = new LoginTicket();

@@ -22,7 +22,7 @@ public interface QuestionDAO {
     //#{headUrl}: 其中的headUrl是User类中的成员变量名, 不要写成head_url
     /*@Insert({"insert into " + TABLE_NAME + " ( "+ INSERT_FIELDS+  " ) "+
             " values (#{title}, #{content}, #{userId}, #{createdDate}, #{commentCount})"}) //#{..}是类中的字段*/
-    int addUser(Question question);
+    int addQuestion(Question question);
 
 
     List<Question> selectLatestQuestions(@Param("userId") int userId,
