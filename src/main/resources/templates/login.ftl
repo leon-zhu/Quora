@@ -19,9 +19,9 @@
             <h1 class="logo hide-text"><img src="../images/res/nk.png" alt=""></h1>
             <h2 class="subtitle">
                 <#if msg??>
-                    ${msg}
+                    ${msg!}
                 <#else>
-                与世界分享你的知识、经验和见解
+                    与世界分享你的知识、经验和见解
                 </#if>
             </h2>
         </div>
@@ -31,13 +31,13 @@
                     <input type="hidden" name="_xsrf" value="21aa1c8d254df2899b23ab9afbd62a53">
                     <div class="group-inputs">
                         <div class="email input-wrapper">
-                            <input type="text" name="name" aria-label="用户名" placeholder="用户名" required="">
+                            <input type="text" name="name" aria-label="手机号或邮箱" placeholder="手机号或邮箱" required="">
                         </div>
                         <div class="input-wrapper">
                             <input type="password" name="password" aria-label="密码" placeholder="密码" required="">
                         </div>
                     </div>
-                    <input type="hidden" name="next" value="${next!}"/> <!--此参数与拦截器有关, 未登录跳转, 登录后直接跳入对应的url-->
+                    <input type="hidden" name="next" value="${next!}"/>
                     <div class="button-wrapper command clearfix">
                         <button class="sign-button submit" type="submit" onclick="form=document.getElementById('regloginform');form.action='/login'">登录</button>
                         <button class="sign-button submit" type="submit" onclick="form=document.getElementById('regloginform');form.action='/reg'">注册</button>

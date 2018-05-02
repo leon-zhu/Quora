@@ -31,7 +31,7 @@ public class LogAspect {
         logger.info("before method: " + sb.toString());
     }
 
-    @After("execution(* com.quora.controller.DemoController.*(..))")
+    @After("execution(* com.quora.controller.*.*(..))")
     public void afterMethod() {
         logger.info("after method");
     }

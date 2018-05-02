@@ -1,11 +1,9 @@
 package com.quora.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.quora.controller.DemoController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.math.BigInteger;
 import java.security.MessageDigest;
 
 /**

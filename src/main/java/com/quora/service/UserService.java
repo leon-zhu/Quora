@@ -1,18 +1,14 @@
 package com.quora.service;
 
-import com.quora.controller.DemoController;
 import com.quora.dao.LoginTicketDAO;
 import com.quora.dao.UserDAO;
 import com.quora.module.LoginTicket;
 import com.quora.module.User;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
-import sun.security.provider.MD5;
 
 import java.util.*;
 
