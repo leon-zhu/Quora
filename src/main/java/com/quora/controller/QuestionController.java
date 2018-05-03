@@ -1,6 +1,7 @@
 package com.quora.controller;
 
 import com.quora.dao.QuestionDAO;
+import com.quora.module.HostHolder;
 import com.quora.module.Question;
 import com.quora.service.QuestionService;
 import com.quora.service.QuoraUtils;
@@ -28,14 +29,19 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private HostHolder hostHolder;
+
     @RequestMapping(path = "/question/add", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String add(@RequestParam("title") String title, @RequestParam("content") String content) {
 
+        if (hostHolder.getUser() == null) {
+            return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
+        }
         try {
-            if (questionService.addQuestion(title, content) > 0) {
+            if (questionService.addQuestion(title, content) > 0)
                 return QuoraUtils.getJSONString(0);
-            }
         } catch (Exception e) {
             logger.error("add question failed: " + e.getMessage());
         }

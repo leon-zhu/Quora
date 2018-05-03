@@ -3,11 +3,11 @@ package com.quora.service;
 import com.quora.dao.QuestionDAO;
 import com.quora.module.HostHolder;
 import com.quora.module.Question;
-import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -40,14 +40,14 @@ public class QuestionService {
 
     public int addQuestion(String title, String content) {
         Question question = new Question();
-        question.setTitle(title);
-        question.setContent(content);
+        //对title进行html标签过滤
+        question.setTitle(HtmlUtils.htmlEscape(title)); //底层实际上就是对<, >, /, "做转义
+        //对content进行html标签过滤
+        question.setContent(HtmlUtils.htmlEscape(content));
         question.setCreatedDate(new Date());
         question.setCommentCount(0);
-        if (hostHolder.getUser() != null)
-            question.setUserId(hostHolder.getUser().getId());
-        else
-            question.setUserId(QuoraUtils.ANONYMOUS_USER_ID); //未登录, 实际上匿名用户不允许提问, 只有登录用户才看的到提问按钮
+        question.setUserId(hostHolder.getUser().getId()); //Controller已经判断用户已登录
+
         return addQuestion(question);
     }
 
