@@ -22,7 +22,7 @@
                             <div class="feed-item-inner">
                                 <div class="avatar">
                                     <a title="${vo.user.name!}" data-tip="p$t$amuro1230" class="zm-item-link-avatar" target="_blank" href="https://nowcoder.com/people/amuro1230">
-                                    <img src="${vo.user.headUrl!}" class="zm-item-img-avatar"/>
+                                        <img src="${vo.user.headUrl!}" class="zm-item-img-avatar"/>
                                     </a>
                                 </div>
                                 <div class="feed-main">

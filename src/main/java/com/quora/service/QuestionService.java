@@ -47,7 +47,7 @@ public class QuestionService {
         if (hostHolder.getUser() != null)
             question.setUserId(hostHolder.getUser().getId());
         else
-            question.setUserId(QuoraUtils.ANONYMOUS_USER_ID); //未登录
+            question.setUserId(QuoraUtils.ANONYMOUS_USER_ID); //未登录, 实际上匿名用户不允许提问, 只有登录用户才看的到提问按钮
         return addQuestion(question);
     }
 
