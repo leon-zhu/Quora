@@ -30,6 +30,9 @@ public class QuestionService {
     @Autowired
     private HostHolder hostHolder;
 
+    @Autowired
+    private SensitiveWordsService sensitiveWordsService;
+
     public List<Question> getLateseQuestions(int userId, int offset, int limit) {
         return questionDAO.selectLatestQuestions(userId, offset, limit);
     }
@@ -40,15 +43,21 @@ public class QuestionService {
 
     public int addQuestion(String title, String content) {
         Question question = new Question();
-        //对title进行html标签过滤
+        //对title, content进行html标签过滤
         question.setTitle(HtmlUtils.htmlEscape(title)); //底层实际上就是对<, >, /, "做转义
-        //对content进行html标签过滤
         question.setContent(HtmlUtils.htmlEscape(content));
+        //对title, content进行敏感词过滤
+        question.setTitle(sensitiveWordsService.filter(title));
+        question.setContent(sensitiveWordsService.filter(content));
         question.setCreatedDate(new Date());
         question.setCommentCount(0);
         question.setUserId(hostHolder.getUser().getId()); //Controller已经判断用户已登录
 
         return addQuestion(question);
+    }
+
+    public Question getQuestionById(int id) {
+        return questionDAO.getQuestionById(id);
     }
 
 }

@@ -31,4 +31,7 @@ public interface QuestionDAO {
 
     //@Delete({"delete from " + TABLE_NAME + " where id = #{id}"})
     int deleteById(int id);
+
+    //@Select({"select " + SELECT_FIELDS + " from " + TABLE_NAME + " where id = #{id}"})
+    Question getQuestionById(@Param("id") int id);
 }

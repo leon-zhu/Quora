@@ -35,5 +35,13 @@
         where id = #{id}
     </delete>
 
+    <select id="getQuestionById" resultType="com.quora.module.Question">
+        select
+        <include refid="selectFields"/>
+        from
+        <include refid="table"/>
+        where id = #{id}
+    </select>
+
 
 </mapper>
