@@ -25,7 +25,7 @@ public class LogAspect {
     @Before("execution(* com.quora.controller.*Controller.*(..))")
     public void beforeMethod(JoinPoint joinPoint) {
         StringBuilder sb = new StringBuilder();
-        for (Object obj: joinPoint.getArgs()) {
+        for (Object obj : joinPoint.getArgs()) {
             sb.append(obj + ", ");
         }
         logger.info("before method: " + sb.toString());
@@ -35,4 +35,5 @@ public class LogAspect {
     public void afterMethod() {
         logger.info("after method");
     }
+
 }

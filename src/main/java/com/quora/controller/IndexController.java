@@ -37,7 +37,8 @@ public class IndexController {
 
     /**
      * 用户页面, 对应于userId
-     * @param model 模型
+     *
+     * @param model  模型
      * @param userId 用户id
      * @return index.ftl
      */
@@ -50,6 +51,7 @@ public class IndexController {
 
     /**
      * 首页, userId为0
+     *
      * @param model 模型
      * @return index.ftl
      */
@@ -63,9 +65,10 @@ public class IndexController {
 
     /**
      * 选取最新的问题列表,
+     *
      * @param userId 用户id
      * @param offset 偏移大小
-     * @param limit 问题数量
+     * @param limit  问题数量
      * @return 问题list
      */
     private List<ViewObject> getQuestions(int userId, int offset, int limit) {
