@@ -27,6 +27,6 @@ public class QuoraWebConfiguration implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //注意顺序
         registry.addInterceptor(passportInterceptor);
-        registry.addInterceptor(loginRequiredInteceptor).addPathPatterns("/user/*");
+        registry.addInterceptor(loginRequiredInteceptor).addPathPatterns("/user/*").addPathPatterns("/question/*");
     }
 }

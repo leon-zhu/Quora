@@ -1,47 +1,46 @@
-#parse("header.html")
+<#include "header.ftl">
 <link rel="stylesheet" href="../styles/letter.css">
     <div id="main">
         <div class="zg-wrap zu-main clearfix ">
             <ul class="letter-list">
-                #foreach ($conversation in $conversations)
+                <#list conversations as conversation>
                 <li id="conversation-item-10001_622873">
-                <a class="letter-link" href="/msg/detail?conversationId=$conversation.conversation.conversationId">
+                <a class="letter-link" href="/msg/detail?conversationId=${conversation.message.conversationId}">
                 </a>
                 <div class="letter-info">
-                <span class="l-time">$date.format('yyyy-MM-dd HH:mm:ss', $conversation.conversation.createdDate)</span>
+                    <span class="l-time">${conversation.message.createdDate?string("yyyy-MM-dd hh:mm:ss")!}</span>
                 <div class="l-operate-bar">
                     <!--
                 <a href="javascript:void(0);" class="sns-action-del" data-id="10001_622873">
                 删除
                 </a>
                 -->
-                <a href="/msg/detail?conversationId=$conversation.conversation.conversationId">
-                    $conversation.conversation.id
+                <a href="/msg/detail?conversationId=${conversation.message.conversationId}">
+                    ${conversation.message.id} <!--id存了未读数-->
                 </a>
                 </div>
                 </div>
                 <div class="chat-headbox">
                 <span class="msg-num">
-                $conversation.unread
+                ${conversation.unreadCount!}
                 </span>
                 <a class="list-head">
-                <img alt="头像" src="$conversation.user.headUrl">
+                <img alt="头像" src="${conversation.user.headUrl}">
                 </a>
                 </div>
                 <div class="letter-detail">
-                <a title="$conversation.user.name" class="letter-name level-color-1">
-                    $conversation.user.name
+                <a title="${conversation.user.name}" class="letter-name level-color-1">
+                    ${conversation.user.name}
                 </a>
                 <p class="letter-brief">
-                <a href="/msg/detail?conversationId=$conversation.conversation.conversationId">
-                $conversation.conversation.content
+                <a href="/msg/detail?conversationId=${conversation.message.conversationId}">
+                ${conversation.message.content}
                 </a>
                 </p>
                 </div>
                 </li>
-                #end
+                </#list>
             </ul>
-
         </div>
     </div>
-#parse("footer.html")
+<#include "footer.ftl">

@@ -213,6 +213,32 @@ public class MultiThreadTests {
         }
     }
 
+
+    public static void testFuture() {
+        //ExecutorService service = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        Future<Integer> future = service.submit(new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(2000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return 1;
+            }
+        });
+        service.shutdown();
+        try {
+            System.out.println(future.get(1000, TimeUnit.MILLISECONDS));
+        } catch (Exception e) {
+            System.out.println("等待超时");
+            //e.printStackTrace();
+        }
+
+    }
+
+
     /**
      * 测试
      *
@@ -224,7 +250,8 @@ public class MultiThreadTests {
         //testBlockingQueue();
         //testThreadLocal();
         //testExecutor();
-        testWithAtomic();
+        //testWithAtomic();
+        testFuture();
     }
 }
 
