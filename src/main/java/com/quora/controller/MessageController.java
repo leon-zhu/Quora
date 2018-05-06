@@ -5,7 +5,7 @@ import com.quora.module.Message;
 import com.quora.module.User;
 import com.quora.module.ViewObject;
 import com.quora.service.MessageService;
-import com.quora.service.QuoraUtils;
+import com.quora.util.QuoraUtils;
 import com.quora.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
