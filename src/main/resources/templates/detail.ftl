@@ -87,11 +87,20 @@
                     <meta itemprop="answer-url-token" content="66862039">
                     <a class="zg-anchor-hidden" name="answer-22162611"></a>
                     <div class="zm-votebar goog-scrollfloater" data-za-module="VoteBar">
+                        <#if comment.likeCount gt 0>
+                        <button class="up" aria-pressed="true" title="赞同">
+                        <#else>
                         <button class="up" aria-pressed="false" title="赞同">
+                        </#if>
                             <i class="icon vote-arrow"></i>
-                            <span class="count">28</span>
+                            <span class="count">${comment.likeCount!"0"}</span>
                             <span class="label sr-only">赞同</span></button>
+
+                        <#if comment.likeCount lt 0>
+                        <button class="down" aria-pressed="true" title="反对，不会显示你的姓名">
+                        <#else>
                         <button class="down" aria-pressed="false" title="反对，不会显示你的姓名">
+                        </#if>
                             <i class="icon vote-arrow"></i>
                             <span class="label sr-only">反对，不会显示你的姓名</span></button>
                     </div>
@@ -106,7 +115,7 @@
                         <div class="zm-item-vote-info" data-votecount="28" data-za-module="VoteInfo">
                                 <span class="voters text">
                                     <a href="" class="more text">
-                                        <span class="js-voteCount">28</span>&nbsp;人赞同</a></span>
+                                        <span class="js-voteCount">${comment.likeCount!"0"}</span>&nbsp;人赞同</a></span>
                         </div>
                     </div>
                     <div class="zm-item-rich-text expandable js-collapse-body" data-resourceid="6727688"

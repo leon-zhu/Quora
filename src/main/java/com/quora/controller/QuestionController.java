@@ -37,6 +37,9 @@ public class QuestionController {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    private LikeService likeService;
+
     @RequestMapping(path = "/question/add", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String add(@RequestParam("title") String title, @RequestParam("content") String content) {
@@ -60,6 +63,9 @@ public class QuestionController {
         List<ViewObject> viewObjectList = new ArrayList<>();
         for (Comment comment : commentList) {
             ViewObject obj = new ViewObject();
+            //点赞, 点踩
+            obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), comment.getId(), EntityType.ENTITY_COMMENT));
+            obj.set("likeCount", likeService.getLikeCount(comment.getId(), EntityType.ENTITY_COMMENT));
             obj.set("comment", comment);
             obj.set("user", userService.getUser(comment.getUserId()));
             viewObjectList.add(obj);

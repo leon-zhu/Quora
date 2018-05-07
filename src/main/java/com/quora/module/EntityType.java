@@ -10,4 +10,6 @@ package com.quora.module;
 public class EntityType {
 
     public static final int ENTITY_QUESITON = 1; //评论实体为question
+    public static final int ENTITY_COMMENT = 2; //评论实体为COMMENT
+
 }
