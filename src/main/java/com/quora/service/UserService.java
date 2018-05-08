@@ -95,6 +95,7 @@ public class UserService {
         //登陆注册成功, 均下发ticket
         String ticket = addLoginTicket(user.getId());
         res.put("ticket", ticket);
+        res.put("userId", user.getId()+"");
         return res;
     }
 

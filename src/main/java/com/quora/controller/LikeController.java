@@ -3,6 +3,7 @@ package com.quora.controller;
 import com.quora.async.EventModel;
 import com.quora.async.EventProducer;
 import com.quora.async.EventType;
+import com.quora.module.Comment;
 import com.quora.module.EntityType;
 import com.quora.module.HostHolder;
 import com.quora.service.CommentService;
@@ -48,9 +49,10 @@ public class LikeController {
         if (hostHolder.getUser() == null)
             return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
 
-
+        Comment comment = commentService.getCommentById(commentId);
         eventProducer.fireEvent(new EventModel().setEntityType(EntityType.ENTITY_COMMENT)
-        .setType(EventType.LIKE).setEntityId(commentId).setActorId(hostHolder.getUser().getId()));
+        .setType(EventType.LIKE).setEntityId(commentId).setActorId(hostHolder.getUser().getId())
+        .setEntityOwnerId(comment.getUserId()).setExt("questionId", String.valueOf(comment.getEntityId())));
 
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
         return QuoraUtils.getJSONString(0, String.valueOf(likeCount));

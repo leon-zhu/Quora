@@ -1,5 +1,8 @@
 package com.quora.controller;
 
+import com.quora.async.EventModel;
+import com.quora.async.EventProducer;
+import com.quora.async.EventType;
 import com.quora.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +31,9 @@ import java.util.Map;
 public class LoginController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private EventProducer eventProducer;
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -90,7 +96,14 @@ public class LoginController {
                 //将ticket添加到cookie
                 Cookie cookie = new Cookie("ticket", res.get("ticket"));
                 cookie.setPath("/"); //可在同一应用服务其内共享方法
+                if (remember) {
+                    cookie.setMaxAge(3600*24*5); //5天有效期
+                }
                 response.addCookie(cookie);
+
+                eventProducer.fireEvent(new EventModel().setType(EventType.LOGIN).setActorId(Integer.parseInt(res.get("userId")))
+                .setExt("userName", name).setExt("email", "154221571@qq.com"));
+
                 if (StringUtils.isEmpty(next))
                     return "redirect:/";
                 else

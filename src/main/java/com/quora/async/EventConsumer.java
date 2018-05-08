@@ -10,6 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import java.util.Map;
  * @date: 2018/5/8 15:09
  * @version: 1.0
  */
+@Component
 public class EventConsumer implements InitializingBean, ApplicationContextAware {
 
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
@@ -70,7 +72,7 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
                         }
                         //找到关联的handler, 一个一个处理
                         for (EventHandler handler : config.get(eventModel.getType())) {
-                            handler.doHandler(eventModel);;
+                            handler.doHandler(eventModel);
                         }
                     }
                 }

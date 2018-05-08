@@ -1,5 +1,7 @@
 package com.quora.async;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +12,7 @@ import java.util.Map;
  * @date: 2018/5/8 14:17
  * @version: 1.0
  */
+@Component
 public class EventModel {
     private EventType type; //事件类型 - 点赞事件/评论
     private int actorId; //事件触发者 - 谁点的赞/谁发的评论
@@ -24,8 +27,9 @@ public class EventModel {
     }
 
 
-    public void setExt(String key, String value) {
+    public EventModel setExt(String key, String value) {
         exts.put(key, value);
+        return this;
     }
 
     public String getExt(String key) {
