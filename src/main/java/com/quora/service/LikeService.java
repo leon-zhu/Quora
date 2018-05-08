@@ -18,20 +18,20 @@ public class LikeService {
     @Autowired
     private JedisAdaptor jedisAdaptor;
 
-    public long like(int userId, int entityId, int entityType) {
-        String likeKey = RedisKeyUtil.getLikeKey(entityId, entityType);
+    public long like(int userId, int entityType, int entityId) {
+        String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         jedisAdaptor.sadd(likeKey, String.valueOf(userId)); //元素为: userId
         String dislikeKey = RedisKeyUtil.getDislikeKey(entityType, entityId);
         jedisAdaptor.srem(dislikeKey, String.valueOf(userId));
         return jedisAdaptor.scard(likeKey);
     }
 
-    public long dislike(int userId, int entityId, int entityType) {
-        String dislikeKey = RedisKeyUtil.getDislikeKey(entityId, entityType);
+    public long dislike(int userId, int entityType, int entityId) {
+        String dislikeKey = RedisKeyUtil.getDislikeKey(entityType, entityId);
         jedisAdaptor.sadd(dislikeKey, String.valueOf(userId)); //元素为: userId
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         jedisAdaptor.srem(likeKey, String.valueOf(userId));
-        return jedisAdaptor.scard(dislikeKey);
+        return jedisAdaptor.scard(likeKey); //有些疑惑
     }
 
     /**
@@ -44,7 +44,7 @@ public class LikeService {
      * @param entityType
      * @return
      */
-    public int getLikeStatus(int userId, int entityId, int entityType) {
+    public int getLikeStatus(int userId, int entityType, int entityId) {
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
         if (jedisAdaptor.sismember(likeKey, String.valueOf(userId)))
             return 1;
@@ -52,8 +52,10 @@ public class LikeService {
         return jedisAdaptor.sismember(dislikeKey, String.valueOf(userId))? -1 : 0;
     }
 
-    public long getLikeCount(int entityId, int entityType) {
+    public long getLikeCount(int entityType, int entityId) {
         String likeKey = RedisKeyUtil.getLikeKey(entityType, entityId);
+        System.out.println("调用LikeService中的getLikeCount函数: entityType = " + entityType + ", entityId = " + entityId);
+
         return jedisAdaptor.scard(likeKey);
     }
 

@@ -37,7 +37,7 @@ public class LikeController {
     public String like(@RequestParam("commentId") int commentId) {
         if (hostHolder.getUser() == null)
             return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
-        long likeCount = likeService.like(hostHolder.getUser().getId(), commentId, EntityType.ENTITY_COMMENT); //commentId: 某条评论的赞踩
+        long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
         return QuoraUtils.getJSONString(0, String.valueOf(likeCount));
 
     }
@@ -47,7 +47,7 @@ public class LikeController {
     public String dislike(@RequestParam("commentId") int commentId) {
         if (hostHolder.getUser() == null)
             return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
-        long dislikeCount = likeService.dislike(hostHolder.getUser().getId(), commentId, EntityType.ENTITY_COMMENT); //commentId: 某条评论的赞踩
+        long dislikeCount = likeService.dislike(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
         return QuoraUtils.getJSONString(0, String.valueOf(dislikeCount));
 
     }

@@ -3,7 +3,7 @@ package com.quora.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -14,7 +14,7 @@ import redis.clients.jedis.JedisPool;
  * @date: 2018/5/6 14:12
  * @version: 1.0
  */
-@Component
+@Service
 public class JedisAdaptor implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(JedisAdaptor.class);
@@ -25,7 +25,6 @@ public class JedisAdaptor implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         pool = new JedisPool("redis://localhost:6379/8"); //连接池
-        System.out.println("已创建连接池");
     }
 
     /**

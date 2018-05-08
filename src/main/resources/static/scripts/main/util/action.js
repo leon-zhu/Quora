@@ -15,6 +15,7 @@
      *  @param  {Function} oConf.always 操作的回调
      */
     function fLike(oConf) {
+        console.log("进来了吗？");
         var that = this;
         that.post({
             url: '/like',

@@ -53,8 +53,9 @@ public class QuestionController {
         return QuoraUtils.getJSONString(1, "failed");
     }
 
-    @RequestMapping(path = "/question/{id}")
+    @RequestMapping(path = "/question/{id}", method = {RequestMethod.GET})
     public String questionDetail(@PathVariable("id") int id, Model model) {
+
         Question question = questionService.getQuestionById(id);
         model.addAttribute("question", question);
         model.addAttribute("user", userService.getUser(question.getUserId()));
@@ -64,8 +65,8 @@ public class QuestionController {
         for (Comment comment : commentList) {
             ViewObject obj = new ViewObject();
             //点赞, 点踩
-            obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), comment.getId(), EntityType.ENTITY_COMMENT));
-            obj.set("likeCount", likeService.getLikeCount(comment.getId(), EntityType.ENTITY_COMMENT));
+            obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            obj.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             obj.set("comment", comment);
             obj.set("user", userService.getUser(comment.getUserId()));
             viewObjectList.add(obj);

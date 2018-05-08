@@ -1,4 +1,4 @@
-<#include "header.ftl">
+<#include "header.ftl" parse=true>
 <link rel="stylesheet" href="../styles/letter.css">
     <div id="main">
         <div class="zg-wrap zu-main clearfix ">
@@ -43,4 +43,4 @@
             </ul>
         </div>
     </div>
-<#include "footer.ftl">
+<#include "footer.ftl" parse=true>
