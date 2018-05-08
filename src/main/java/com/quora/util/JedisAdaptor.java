@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.List;
+
 /**
  * 演示Jedis的使用
  *
@@ -104,5 +106,31 @@ public class JedisAdaptor implements InitializingBean {
             if (jedis != null) jedis.close();
         }
         return false;
+    }
+
+    public long lpush(String key, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.lpush(key, value);
+        } catch (Exception e) {
+            logger.error("将元素加入列表左边失败: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return 0;
+    }
+
+    //阻塞弹出
+    //timeout为0, 那么一直阻塞，直到有数据为止
+    public List<String> brpop(int timeout, String key) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.brpop(timeout, key);
+        } catch (Exception e) {
+            logger.error("将元素从列表右边弹出失败: " + e.getMessage());
+        }
+        return null;
     }
 }

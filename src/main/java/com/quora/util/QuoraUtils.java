@@ -16,7 +16,8 @@ import java.security.MessageDigest;
 public class QuoraUtils {
     private static final Logger logger = LoggerFactory.getLogger(QuoraUtils.class);
 
-    public static final int ANONYMOUS_USER_ID = 999;
+    public static final int ANONYMOUS_USER_ID = 999; //3
+    public static final int SYSTEM_USER_ID = 3; //4
 
 
     public static String getJSONString(int code, String msg) {

@@ -1,7 +1,11 @@
 package com.quora.controller;
 
+import com.quora.async.EventModel;
+import com.quora.async.EventProducer;
+import com.quora.async.EventType;
 import com.quora.module.EntityType;
 import com.quora.module.HostHolder;
+import com.quora.service.CommentService;
 import com.quora.service.LikeService;
 import com.quora.util.QuoraUtils;
 import org.slf4j.Logger;
@@ -31,12 +35,23 @@ public class LikeController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
+    @Autowired
+    private CommentService commentService;
+
 
     @RequestMapping(path = "/like", method = RequestMethod.POST)
     @ResponseBody
     public String like(@RequestParam("commentId") int commentId) {
         if (hostHolder.getUser() == null)
             return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
+
+
+        eventProducer.fireEvent(new EventModel().setEntityType(EntityType.ENTITY_COMMENT)
+        .setType(EventType.LIKE).setEntityId(commentId).setActorId(hostHolder.getUser().getId()));
+
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
         return QuoraUtils.getJSONString(0, String.valueOf(likeCount));
 
