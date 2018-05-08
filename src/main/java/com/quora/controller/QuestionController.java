@@ -56,6 +56,10 @@ public class QuestionController {
     @RequestMapping(path = "/question/{id}", method = {RequestMethod.GET})
     public String questionDetail(@PathVariable("id") int id, Model model) {
 
+        if (hostHolder.getUser() == null) {
+            return "redirect:/reglogin";
+        }
+
         Question question = questionService.getQuestionById(id);
         model.addAttribute("question", question);
         model.addAttribute("user", userService.getUser(question.getUserId()));

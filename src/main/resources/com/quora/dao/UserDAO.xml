@@ -15,7 +15,7 @@
         where id = #{id}
     </update>
 
-    <insert id="addUser" parameterType="com.quora.module.User">
+    <insert id="addUser" parameterType="com.quora.module.User" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="table"/>
         (

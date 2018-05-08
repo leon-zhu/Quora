@@ -109,7 +109,7 @@ public class LoginController {
 
     //注册页面: 访问/reglogin, 然后显示login.ftl页面
     //在login.ftl中: 登陆->/login/, 注册->/reg/
-    @RequestMapping(path = "/reglogin", method = RequestMethod.GET)
+    @RequestMapping(path = "/reglogin", method = {RequestMethod.GET, RequestMethod.POST})
     public String reglogin(Model model, @RequestParam(value = "next", required = false) String next) {
         model.addAttribute("next", next);
         return "login";

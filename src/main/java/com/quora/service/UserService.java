@@ -60,7 +60,7 @@ public class UserService {
         userDAO.addUser(user);
 
         //登陆注册成功, 均下发ticket
-        String ticket = addLoginTicket(user.getId());
+        String ticket = addLoginTicket(user.getId()); //主键要返回主键, 不是在mybatis-config.xml设置就好了, 在UserDAO.xml中也要设置
         res.put("ticket", ticket);
 
         return res;

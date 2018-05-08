@@ -20,7 +20,7 @@
         LIMIT #{offset}, #{limit}
     </select>
 
-    <insert id="addQuestion" parameterType="com.quora.module.Question">
+    <insert id="addQuestion" parameterType="com.quora.module.Question" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="table"/>
         (

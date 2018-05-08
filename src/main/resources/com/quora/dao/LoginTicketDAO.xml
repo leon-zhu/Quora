@@ -7,7 +7,7 @@
     <sql id="insertFields">user_id, ticket, expired, status</sql>
     <sql id="selectFields">id, user_id, ticket, expired, status</sql>
 
-    <insert id="addLoginTicket">
+    <insert id="addLoginTicket" useGeneratedKeys="true" keyProperty="id">
         insert into
         <include refid="table"/>
         (
