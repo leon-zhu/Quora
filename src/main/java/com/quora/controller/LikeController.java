@@ -55,7 +55,7 @@ public class LikeController {
         .setEntityOwnerId(comment.getUserId()).setExt("questionId", String.valueOf(comment.getEntityId())));
 
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
-        return QuoraUtils.getJSONString(0, String.valueOf(likeCount));
+        return QuoraUtils.getJSONString(0, String.valueOf(likeCount)); //返回该实体的点赞数
 
     }
 
@@ -65,7 +65,7 @@ public class LikeController {
         if (hostHolder.getUser() == null)
             return QuoraUtils.getJSONString(QuoraUtils.ANONYMOUS_USER_ID);
         long dislikeCount = likeService.dislike(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
-        return QuoraUtils.getJSONString(0, String.valueOf(dislikeCount));
+        return QuoraUtils.getJSONString(0, String.valueOf(dislikeCount)); //返回该实体的点赞数, dislike method-具体实现
 
     }
 

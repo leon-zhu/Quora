@@ -69,7 +69,9 @@ public class QuestionController {
         for (Comment comment : commentList) {
             ViewObject obj = new ViewObject();
             //点赞, 点踩
+            //当前用户是否对当前实体点过赞
             obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            //当前是否得点赞数
             obj.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
             obj.set("comment", comment);
             obj.set("user", userService.getUser(comment.getUserId()));

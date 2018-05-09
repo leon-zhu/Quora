@@ -63,7 +63,7 @@ public class MailSender implements InitializingBean {
     public void afterPropertiesSet() throws Exception {
         mailSender = new JavaMailSenderImpl();
         mailSender.setUsername("lyzhu0318");
-        mailSender.setPassword("zly0318"); //注意: 这个是授权码, 不是密码
+        mailSender.setPassword("***"); //注意: 这个是授权码, 不是密码
         mailSender.setHost("smtp.163.com");
         mailSender.setPort(25); //端口
         mailSender.setProtocol("smtp"); //smtp

@@ -10,7 +10,7 @@ import redis.clients.jedis.JedisPool;
 import java.util.List;
 
 /**
- * 演示Jedis的使用
+ * 包装方法
  *
  * @author: leon
  * @date: 2018/5/6 14:12
