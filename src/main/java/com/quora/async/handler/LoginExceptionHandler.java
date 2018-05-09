@@ -4,17 +4,12 @@ import com.quora.async.EventHandler;
 import com.quora.async.EventModel;
 import com.quora.async.EventType;
 import com.quora.util.MailSender;
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.FileTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
-
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;

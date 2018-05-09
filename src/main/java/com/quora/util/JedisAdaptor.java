@@ -6,8 +6,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.Transaction;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 /**
  * 包装方法
@@ -133,4 +136,105 @@ public class JedisAdaptor implements InitializingBean {
         }
         return null;
     }
+
+    public Jedis getJedis() {
+        return pool.getResource();
+    }
+
+    //开启事务
+    public Transaction multi(Jedis jedis) {
+        try {
+            return jedis.multi();
+        } catch (Exception e) {
+            logger.error("开启事务失败: " + e.getMessage());
+        }
+        return null;
+    }
+
+    //执行事务中的所有的命令(以队列形式保存), 获取执行结果
+    public List<Object> exec(Transaction ts, Jedis jedis) {
+        try {
+            return ts.exec();
+        } catch (Exception e) {
+            logger.error("执行失败: " + e.getMessage());
+        } finally {
+            if (ts != null) {
+                try {
+                    ts.close();
+                } catch (IOException e) {
+                    logger.error("关闭事务失败:" + e.getMessage());
+                }
+            }
+            if (jedis != null) jedis.close();
+        }
+        return null;
+    }
+
+    //sorted sets: 添加元素, 实际上就是优先队列
+    public long zadd(String key, double score, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zadd(key, score, value);
+        } catch (Exception e) {
+            logger.error("添加元素失败: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return 0;
+    }
+
+    public long zrem(String key, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zrem(key, value);
+        } catch (Exception e) {
+            logger.error("删除元素失败: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return 0;
+    }
+
+    public Set<String> zrevrange(String key, int start, int end) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zrevrange(key, start, end);
+        } catch (Exception e) {
+            logger.error("获取元素失败: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return null;
+    }
+
+    public long zcard(String key) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zcard(key);
+        } catch (Exception e) {
+            logger.error("获取元素个数失败: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return 0;
+    }
+
+    public Long zrank(String key, String value) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
+            return jedis.zrank(key, value);
+        } catch (Exception e) {
+            logger.error("获取某元素名次: " + e.getMessage());
+        } finally {
+            if (jedis != null) jedis.close();
+        }
+        return null;
+    }
+
+
 }

@@ -3,9 +3,11 @@ package com.quora;
 import com.quora.dao.LoginTicketDAO;
 import com.quora.dao.QuestionDAO;
 import com.quora.dao.UserDAO;
+import com.quora.module.EntityType;
 import com.quora.module.LoginTicket;
 import com.quora.module.Question;
 import com.quora.module.User;
+import com.quora.service.FollowService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,6 +42,9 @@ public class InitDatabaseTests {
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
+
+    @Autowired
+    private FollowService followService;
 
     @Test
     public void initDatabase() {
@@ -77,6 +82,11 @@ public class InitDatabaseTests {
             loginTicketDAO.addLoginTicket(loginTicket);
             loginTicketDAO.updateStatus(loginTicket.getTicket(), 1);
             System.out.println(loginTicketDAO.selectByTicket(loginTicket.getTicket()));
+
+            //互相关注
+            for (int j = 1; j <= i; j++) {
+                followService.follow(j, EntityType.ENTITY_USER, i);
+            }
 
 
         }

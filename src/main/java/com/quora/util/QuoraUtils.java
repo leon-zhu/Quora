@@ -20,7 +20,7 @@ public class QuoraUtils {
     public static final int SYSTEM_USER_ID = 3; //4
 
 
-    public static String getJSONString(int code, String msg) {
+    public static String getJSONString(int code, Object msg) {
         JSONObject json = new JSONObject();
         json.put("code", code);
         json.put("msg", msg);
