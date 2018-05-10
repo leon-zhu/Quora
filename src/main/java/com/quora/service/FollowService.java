@@ -92,14 +92,14 @@ public class FollowService {
      */
     public List<Integer> getFollowers(int entityType, int entityId, int offset, int count) {
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
-        Set<String> set = jedisAdaptor.zrevrange(followerKey, offset, count); //获取粉丝范围[offset, count], score按时间排
+        Set<String> set = jedisAdaptor.zrevrange(followerKey, offset, offset + count); //获取粉丝范围[offset, count], score按时间排
         return getIdsFromSet(set);
 
     }
 
     public List<Integer> getFollowees(int userId, int entityType, int offset, int count) {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, entityType);
-        Set<String> set = jedisAdaptor.zrevrange(followeeKey, offset, count); //获取粉丝范围[offset, count], score按时间排
+        Set<String> set = jedisAdaptor.zrevrange(followeeKey, offset, offset + count); //获取粉丝范围[offset, count], score按时间排
         return getIdsFromSet(set);
     }
 

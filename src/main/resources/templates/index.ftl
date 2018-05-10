@@ -36,7 +36,7 @@
                                         </div>
                                         <div class="expandable entry-body">
                                             <div class="zm-item-vote">
-                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">4168</a></div>
+                                                <a class="zm-item-vote-count js-expand js-vote-count" href="javascript:;" data-bind-votecount="">${vo.followCount!"0"}</a></div>
                                             <div class="zm-item-answer-author-info">
                                                 <a class="author-link" data-tip="p$b$amuro1230" target="_blank" href="/user/${vo.user.id!}">${vo.user.name!}</a>
                                                 , ${vo.question.createdDate!?string("yyyy-MM-dd HH:mm:ss")}</div>
@@ -74,4 +74,6 @@
             </div>
         </div>
     </div>
-<#include "footer.ftl">
+<#include "js.ftl" parse=true>
+<script type="text/javascript" src="/scripts/main/site/detail.js"></script>
+<#include "footer.ftl" parse=true>

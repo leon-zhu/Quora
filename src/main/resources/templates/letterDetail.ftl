@@ -28,4 +28,6 @@
     </div>
 </div>
 
+<#include "js.ftl" parse=true>
+<script type="text/javascript" src="/scripts/main/site/detail.js"></script>
 <#include "footer.ftl" parse=true>

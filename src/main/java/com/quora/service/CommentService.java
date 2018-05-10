@@ -28,7 +28,7 @@ public class CommentService {
         return commentDAO.getCommentCount(entityId, entityType);
     }
 
-    public List<Comment> getComments(int entityId, int entityType) {
+    public List<Comment> getCommentsByEntity(int entityId, int entityType) {
         return commentDAO.getCommentsByEntity(entityId, entityType);
     }
 
@@ -38,6 +38,12 @@ public class CommentService {
         comment.setContent(sensitiveWordsService.filter(comment.getContent()));
         return commentDAO.addComment(comment);
     }
+
+    //获取该用户对所有实体的评论数
+    public int getUserCommentCount(int userId) {
+        return commentDAO.getUserCommentCount(userId);
+    }
+
 
     public Comment getCommentById(int id) {
         return commentDAO.getCommentById(id);

@@ -1,7 +1,8 @@
 package com.quora.controller;
 
-import com.quora.module.Question;
-import com.quora.module.ViewObject;
+import com.quora.module.*;
+import com.quora.service.CommentService;
+import com.quora.service.FollowService;
 import com.quora.service.QuestionService;
 import com.quora.service.UserService;
 import org.slf4j.Logger;
@@ -34,6 +35,15 @@ public class IndexController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FollowService followService;
+
+    @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private HostHolder hostHolder;
+
 
     /**
      * 用户页面, 对应于userId
@@ -44,9 +54,22 @@ public class IndexController {
      */
     @RequestMapping(path = {"/user/{userId}"})
     public String index(Model model, @PathVariable("userId") int userId) {
-        List<ViewObject> viewObjects = getQuestions(userId, 0, 10);
-        model.addAttribute("viewObjects", viewObjects);
-        return "index";
+
+        model.addAttribute("vos", getQuestions(userId, 0, 10));
+
+        User user = userService.getUser(userId);
+        ViewObject vo = new ViewObject();
+        vo.set("user", user);
+        vo.set("commentCount", commentService.getUserCommentCount(userId));
+        vo.set("followerCount", followService.getFollowerCount(EntityType.ENTITY_USER, userId));
+        vo.set("followeeCount", followService.getFolloweeCount(userId, EntityType.ENTITY_USER));
+        if (hostHolder.getUser() != null) {
+            vo.set("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_USER, userId));
+        } else {
+            vo.set("followed", false);
+        }
+        model.addAttribute("profileUser", vo);
+        return "profile";
     }
 
     /**
@@ -79,6 +102,7 @@ public class IndexController {
             vo.set("question", question);
             //这行可能会导致freemarker出现空指针(提问时userId乱填导致的)
             vo.set("user", userService.getUser(question.getUserId())); //发布该问题的用户
+            vo.set("followCount", followService.getFollowerCount(EntityType.ENTITY_QUESITON, question.getId()));
             viewObjects.add(vo);
         }
         return viewObjects;

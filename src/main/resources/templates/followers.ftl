@@ -1,4 +1,4 @@
-<#include "header.ftl">
+<#include "header.ftl" parse=true>
 <link rel="stylesheet" href="../../styles/result.css">
 <link rel="stylesheet" href="../../styles/detail.css">
     <div id="main">
@@ -12,19 +12,19 @@
                 <div class="zm-profile-section-list">
                     <div id="zh-profile-follows-list">
                         <div class="zh-general-list clearfix">
-                            #foreach($vo in $followers)
+                            <#list followers as vo>
                             <div class="zm-profile-card zm-profile-section-item zg-clear no-hovercard">
-                                #if($vo.followed)
+                                <#if vo.followed == true>
                                 <div class="zg-right">
                                     <button class="zg-btn zg-btn-unfollow zm-rich-follow-btn small nth-0
                                     js-follow-user" data-status="1" data-id="$vo.user.id">取消关注</button>
                                 </div>
-                                #else
+                                <#else>
                                 <div class="zg-right">
                                     <button class="zg-btn zg-btn-follow zm-rich-follow-btn small nth-0
                                     js-follow-user">关注</button>
                                 </div>
-                                #end
+                                </#if>
                                 <a title="Barty" class="zm-item-link-avatar" href="/user/${vo.user.id}">
                                     <img src="${vo.user.headUrl}" class="zm-item-img-avatar">
                                 </a>
@@ -43,7 +43,7 @@
                                     </div>
                                 </div>
                             </div>
-                            #end
+                            </#list>
                         </div>
                         <a aria-role="button" class="zg-btn-white zu-button-more">更多</a>
                     </div>
@@ -51,6 +51,6 @@
             </div>
         </div>
     </div>
-<#include "js.ftl">
+<#include "js.ftl" parse=true>
 <script type="text/javascript" src="/scripts/main/site/follow.js"></script>
-<#include "footer.ftl">
+<#include "footer.ftl" parse=true>

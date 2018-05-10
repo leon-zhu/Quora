@@ -40,6 +40,64 @@ public class QuestionController {
     @Autowired
     private LikeService likeService;
 
+    @Autowired
+    private FollowService followService;
+
+    @RequestMapping(path = "/question/{qid}", method = {RequestMethod.GET})
+    public String questionDetail(@PathVariable("qid") int qid, Model model) {
+        if (hostHolder.getUser() == null) {
+            return "redirect:/reglogin";
+        }
+
+        Question question = questionService.getQuestionById(qid);
+        model.addAttribute("question", question);
+
+        model.addAttribute("user", userService.getUser(question.getUserId())); //似乎多余
+
+        List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESITON);
+        List<ViewObject> viewObjectList = new ArrayList<>();
+        for (Comment comment : commentList) {
+            ViewObject obj = new ViewObject();
+            //点赞, 点踩
+            //当前用户是否对当前实体点过赞
+            if (hostHolder.getUser() == null) {
+                obj.set("liked", 0);
+            } else {
+                obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
+            }
+            //当前是否得点赞数
+            obj.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
+            obj.set("comment", comment);
+            obj.set("user", userService.getUser(comment.getUserId()));
+            viewObjectList.add(obj);
+        }
+        model.addAttribute("comments", viewObjectList);
+
+        List<ViewObject> followUsers = new ArrayList<>();
+        // 获取关注的用户信息
+        List<Integer> users = followService.getFollowers(EntityType.ENTITY_QUESITON, qid, 0, 20);
+        for (Integer userId : users) {
+            ViewObject vo = new ViewObject();
+            User u = userService.getUser(userId);
+            if (u == null) {
+                continue;
+            }
+            vo.set("name", u.getName());
+            vo.set("headUrl", u.getHeadUrl());
+            vo.set("id", u.getId());
+            followUsers.add(vo);
+        }
+        model.addAttribute("followUsers", followUsers);
+        if (hostHolder.getUser() != null) {
+            model.addAttribute("followed", followService.isFollower(hostHolder.getUser().getId(), EntityType.ENTITY_QUESITON, qid));
+        } else {
+            model.addAttribute("followed", false);
+        }
+
+        return "detail";
+    }
+
+
     @RequestMapping(path = "/question/add", method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
     public String add(@RequestParam("title") String title, @RequestParam("content") String content) {
@@ -51,34 +109,6 @@ public class QuestionController {
         }
 
         return QuoraUtils.getJSONString(1, "failed");
-    }
-
-    @RequestMapping(path = "/question/{id}", method = {RequestMethod.GET})
-    public String questionDetail(@PathVariable("id") int id, Model model) {
-
-        if (hostHolder.getUser() == null) {
-            return "redirect:/reglogin";
-        }
-
-        Question question = questionService.getQuestionById(id);
-        model.addAttribute("question", question);
-        model.addAttribute("user", userService.getUser(question.getUserId()));
-
-        List<Comment> commentList = commentService.getComments(id, EntityType.ENTITY_QUESITON);
-        List<ViewObject> viewObjectList = new ArrayList<>();
-        for (Comment comment : commentList) {
-            ViewObject obj = new ViewObject();
-            //点赞, 点踩
-            //当前用户是否对当前实体点过赞
-            obj.set("liked", likeService.getLikeStatus(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, comment.getId()));
-            //当前是否得点赞数
-            obj.set("likeCount", likeService.getLikeCount(EntityType.ENTITY_COMMENT, comment.getId()));
-            obj.set("comment", comment);
-            obj.set("user", userService.getUser(comment.getUserId()));
-            viewObjectList.add(obj);
-        }
-        model.addAttribute("comments", viewObjectList);
-        return "detail";
     }
 
 }
