@@ -1,5 +1,8 @@
 package com.quora.controller;
 
+import com.quora.async.EventModel;
+import com.quora.async.EventProducer;
+import com.quora.async.EventType;
 import com.quora.dao.QuestionDAO;
 import com.quora.module.Comment;
 import com.quora.module.EntityType;
@@ -38,6 +41,9 @@ public class CommentController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private EventProducer eventProducer;
+
     @RequestMapping(path = "/addComment", method = RequestMethod.POST)
     public String addComment(@RequestParam("questionId") int questionId,
                              @RequestParam("content") String content) {
@@ -56,6 +62,8 @@ public class CommentController {
             //需要事物控制Transaction
             int count = commentService.getCommentCount(comment.getEntityId(), comment.getEntityType());
             questionService.updateCommentCount(questionId, count);
+            eventProducer.fireEvent(new EventModel().setType(EventType.COMMENT).setActorId(comment.getUserId())
+                    .setEntityId(questionId));
 
         } catch (Exception e) {
             logger.info("增加评论失败");

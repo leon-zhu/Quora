@@ -1,12 +1,10 @@
 package com.quora;
 
+import com.quora.dao.FeedDAO;
 import com.quora.dao.LoginTicketDAO;
 import com.quora.dao.QuestionDAO;
 import com.quora.dao.UserDAO;
-import com.quora.module.EntityType;
-import com.quora.module.LoginTicket;
-import com.quora.module.Question;
-import com.quora.module.User;
+import com.quora.module.*;
 import com.quora.service.FollowService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -42,6 +40,9 @@ public class InitDatabaseTests {
 
     @Autowired
     private LoginTicketDAO loginTicketDAO;
+
+    @Autowired
+    private FeedDAO feedDAO;
 
     @Autowired
     private FollowService followService;
@@ -90,6 +91,14 @@ public class InitDatabaseTests {
 
 
         }
+        Feed feed = new Feed();
+        feed.setData("data");
+        feed.setType(0);
+        feed.setCreatedDate(new Date());
+        feed.setUserId(0);
+        feedDAO.addFeed(feed);
+        System.out.println(feedDAO.getFeedById(feed.getId()));
+
         List<Question> questions = questionDAO.selectLatestQuestions(0, 1, 5);
         for (Question question : questions) {
             System.out.println(question);
