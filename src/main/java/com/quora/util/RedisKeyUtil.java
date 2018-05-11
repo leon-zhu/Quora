@@ -16,6 +16,11 @@ public class RedisKeyUtil {
     private static String BIZ_EVENTQUEUE = "EVENTQUEUE";
     private static String BIZ_FOLLOWER = "FOLLOWER"; //粉丝: 发起关注的人
     private static String BIZ_FOLLOWEE = "FOLLOWEE"; //关注者: 被关注的人
+    private static String BIZ_TIMELINE = "TIMELINE";
+
+    public static String getTimelineKey(int userId) {
+        return  BIZ_TIMELINE + SPLIT + String.valueOf(userId);
+    }
 
     //该实体的所有粉丝的key: 如关注该问题的所有粉丝, 关注该用户的所有粉丝
     public static String getFollowerKey(int entityType, int entityId) {

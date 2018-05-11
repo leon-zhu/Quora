@@ -1,5 +1,6 @@
 package com.quora.module;
 
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -18,6 +19,9 @@ public class Feed {
     private int userId; //谁发出的
     private Date createdDate;
     private String data; //数据, JSON格式
+
+    //辅助变量
+    private JSONObject dataJSON = null;
 
     public Feed() {
     }
@@ -68,6 +72,11 @@ public class Feed {
 
     public void setData(String data) {
         this.data = data;
+        dataJSON = JSONObject.parseObject(data);
+    }
+
+    public String get(String key) {
+        return dataJSON == null? null : dataJSON.getString(key);
     }
 
     @Override

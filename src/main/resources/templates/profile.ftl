@@ -16,7 +16,7 @@
                                 <div class="zg-right">
                                     <#if profileUser.followed == true>
                                     <button class="zg-btn zg-btn-unfollow zm-rich-follow-btn small nth-0
-                                    js-follow-user" data-status="1" data-id="$profileUser.user.id">取消关注</button>
+                                    js-follow-user" data-status="1" data-id="${profileUser.user.id}">取消关注</button>
                                     <#else>
                                     <button class="zg-btn zg-btn-follow zm-rich-follow-btn small nth-0
                                     js-follow-user" data-id="${profileUser.user.id}">关注</button>
