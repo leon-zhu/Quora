@@ -21,7 +21,9 @@
 <body class="zhi ">
 <div role="navigation" class="zu-top">
     <div class="zg-wrap modal-shifting clearfix" id="zh-top-inner">
+        <!--
         <a href="/" class="zu-top-link-logo" id="zh-top-link-logo" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_zhihu_logo">牛客</a>
+        -->
         <div class="top-nav-profile">
             <#if user??>
                 <a href="/user/${user.id!}" class="zu-top-nav-userinfo " id=":0" role="button" aria-haspopup="true" aria-activedescendant="">
@@ -74,7 +76,7 @@
                 <li class="zu-top-nav-li current" id="zh-top-nav-home">
                     <a class="zu-top-nav-link" href="/" id="zh-top-link-home" data-za-c="view_home" data-za-a="visit_home" data-za-l="top_navigation_home">首页</a>
                 </li>
-                <li class="zu-top-nav-li " id="zh-top-nav-explore">
+                <li class="zu-top-nav-li" id="zh-top-nav-explore">
                     <a class="zu-top-nav-link" href="/">发现</a>
                 </li>
                 <#if user??>

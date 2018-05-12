@@ -1,6 +1,6 @@
 <#include "header.ftl" parse=true>
 <link rel="stylesheet" href="../styles/index.css">
-<link rel="stylesheet" href="../styles/detail.css">
+<link rel="stylesheet" href="../styles/detail.css?v=1.1">
     <div class="zg-wrap zu-main clearfix " role="main">
         <div class="zu-main-content">
             <div class="zu-main-content-inner">

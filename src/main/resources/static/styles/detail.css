@@ -7831,6 +7831,7 @@ a>.invisible {
     z-index:20;
     width:100%;
     height:45px;
+    /*background:#3DC7BE;*/
     background:#3d444c;
     /*background:-webkit-linear-gradient(top,#086ed5,#055db5);
     background:linear-gradient(to bottom,#086ed5,#055db5);*/
@@ -7853,11 +7854,13 @@ a>.invisible {
 }
 }.zu-top-link-logo {
     float:left;
-    width:61px;
-    height:100%;
-    background-image:url(../images/res/nk.png);
+    width:35px;
+    height:35px;
+    margin-top: 4px;
+    background-image:url(../images/res/zhihu.jpg);
     background-repeat:no-repeat;
     background-position:center;
+    background-size: contain;
     text-indent:-9999px;
     color:#fff
 }
@@ -8199,10 +8202,15 @@ html.no-touchevents .zu-top-nav-userinfo:hover {
     position:relative;
     float:left;
     margin:0;
-    list-style:none
+    list-style:none；
 }
+/*hanna添加*/
+.zu-top-nav-li:hover{
+    background-color: rgb(0, 188, 155) !important;
+}
+
 .zu-top-nav-li.current {
-    background:#31363d;
+    background:transparent;
 }
 .zu-top-nav-link,.zu-top-nav-link:visited,.zu-top-nav-link:active {
     color:#eee
@@ -8318,7 +8326,7 @@ html.no-touchevents .zu-top-nav-userinfo:hover {
 .topnav-noauth a {
     padding:0 10px;
     width:auto;
-    height:46px;
+    height:44px;
     line-height:46px;
     text-align:center;
     display:block;
