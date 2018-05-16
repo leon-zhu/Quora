@@ -117,7 +117,6 @@ public class LoginController {
             logger.info(e.getMessage());
             return "login";
         }
-
     }
 
     //注册页面: 访问/reglogin, 然后显示login.ftl页面
