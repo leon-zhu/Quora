@@ -130,6 +130,7 @@ public class FollowService {
      */
     public boolean isFollower(int userId, int entityType, int entityId) {
         String followerKey = RedisKeyUtil.getFollowerKey(entityType, entityId);
+        //score为关注时间
         return jedisAdaptor.zrank(followerKey, String.valueOf(userId)) != null;
 
     }

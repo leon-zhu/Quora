@@ -52,7 +52,7 @@ public class QuestionController {
         Question question = questionService.getQuestionById(qid);
         model.addAttribute("question", question);
 
-        model.addAttribute("user", userService.getUser(question.getUserId())); //似乎多余
+        model.addAttribute("user", userService.getUser(question.getUserId())); //发布该问题的用户
 
         List<Comment> commentList = commentService.getCommentsByEntity(qid, EntityType.ENTITY_QUESITON);
         List<ViewObject> viewObjectList = new ArrayList<>();
