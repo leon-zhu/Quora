@@ -56,7 +56,6 @@ public class LikeController {
 
         long likeCount = likeService.like(hostHolder.getUser().getId(), EntityType.ENTITY_COMMENT, commentId); //commentId: 某条评论的赞踩
         return QuoraUtils.getJSONString(0, String.valueOf(likeCount)); //返回该实体的点赞数
-
     }
 
     @RequestMapping(path = "/dislike", method = RequestMethod.POST)

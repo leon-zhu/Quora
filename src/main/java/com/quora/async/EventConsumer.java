@@ -46,6 +46,8 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
         Map<String, EventHandler> beans = applicationContext.getBeansOfType(EventHandler.class);
         if (beans != null) {
             for (Map.Entry<String, EventHandler> entry : beans.entrySet()) {
+                System.out.println("key = " + entry.getKey() + ", value = " + entry.getValue());
+                //当前handler支持的事件类型
                 List<EventType> eventTypes = entry.getValue().getSupportEventTypes();
                 for (EventType type : eventTypes) {
                     if (!config.containsKey(type)) {
@@ -62,18 +64,18 @@ public class EventConsumer implements InitializingBean, ApplicationContextAware 
             public void run() {
                 while (true) {
                     String key = RedisKeyUtil.getEventQueueKey();
+                    //弹出一共两个String, 第一个是key, 第二个才是队列中保存的值
                     List<String> events = jedisAdaptor.brpop(0, key);
-                    for (String event : events) {
-                        if (event.equals(key)) continue; //首先会弹出key
-                        EventModel eventModel = JSON.parseObject(event, EventModel.class);
-                        if (!config.containsKey(eventModel.getType())) {
-                            logger.error("不能识别的事件...");
-                            continue;
-                        }
-                        //找到关联的handler, 一个一个处理
-                        for (EventHandler handler : config.get(eventModel.getType())) {
-                            handler.doHandler(eventModel);
-                        }
+                    //System.out.println("size: " + events.size()); //输出2
+
+                    EventModel eventModel = JSON.parseObject(events.get(1), EventModel.class);
+                    if (!config.containsKey(eventModel.getType())) {
+                        logger.error("不能识别的事件...");
+                        continue;
+                    }
+                    //找到关联的handler, 一个一个处理
+                    for (EventHandler handler : config.get(eventModel.getType())) {
+                        handler.doHandler(eventModel);
                     }
                 }
             }

@@ -16,7 +16,7 @@ import java.util.Map;
 public class EventModel {
     private EventType type; //事件类型 - 点赞事件/评论
     private int actorId; //事件触发者 - 谁点的赞/谁发的评论
-    //关联触发的载体 - 给哪个东西点赞/给哪个东西的发的评论
+    //关联触发的载体 - 给哪个东西点赞/给哪个东西发的评论
     private int entityId;
     private int entityType;
     private int entityOwnerId; //与触发的载体相关的对象 - 如站内信 - 此表示 给谁的站内信
@@ -25,7 +25,6 @@ public class EventModel {
 
     public EventModel() {
     }
-
 
     public EventModel setExt(String key, String value) {
         exts.put(key, value);
