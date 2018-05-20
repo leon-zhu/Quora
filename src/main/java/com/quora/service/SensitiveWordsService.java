@@ -221,7 +221,7 @@ public class SensitiveWordsService implements InitializingBean {
     public static void main(String[] args) {
         SensitiveWordsService sensitiveWordsService = new SensitiveWordsService();
         sensitiveWordsService.addSensitiveWord("暴力");
-        String input = "ji, <暴力>**了";
+        String input = "ji, <暴(力>**了";
         System.out.println(sensitiveWordsService.filter(input));
 
     }
